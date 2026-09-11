@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 public class GameManegerScript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -10,6 +11,7 @@ public class GameManegerScript : MonoBehaviour
 
         [SerializeField] Animator canvasAnimator;
 
+    [SerializeField] int WinTarget = 100;
 
     [SerializeField] int grandmaCount;      
     [SerializeField] int GrandmaCost;
@@ -34,21 +36,12 @@ public class GameManegerScript : MonoBehaviour
                 timer = 0;
                 Cookies += grandmaCount;   // en cookie per grandma, varje sekund
                 cookietext.text = Cookies.ToString();
+
+                CheckWinCondition();
             }
             timer += Time.deltaTime;
         }
     }
-
-
-
-  
-
-
-
-
-
-
-
 
 
     public void CookieClicker()
@@ -58,7 +51,7 @@ public class GameManegerScript : MonoBehaviour
             Debug.Log(Cookies);
             canvasAnimator.SetTrigger("Cookie_Shake");
 
-
+        CheckWinCondition();
     }
 
     public void BuyGrandma()
@@ -74,7 +67,13 @@ public class GameManegerScript : MonoBehaviour
         }
     }
 
-
+    void CheckWinCondition()
+    {
+        if (Cookies >= WinTarget)
+        {
+            SceneManager.LoadScene("WinScreen");
+        }
+    }
 
 
 
